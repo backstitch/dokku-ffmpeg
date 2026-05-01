@@ -6,6 +6,10 @@ echo "-----> Installing ffmpeg ..."
 COMMAND=$(cat <<EOF
 echo "-----> install ffmpeg (static build)"
 
+# Strip the dead postgresql trusty-pgdg apt source (404s since trusty EOL)
+sed -i '/apt.postgresql.org.*trusty-pgdg/d' /etc/apt/sources.list
+rm -f /etc/apt/sources.list.d/pgdg.list /etc/apt/sources.list.d/postgresql.list
+
 export DEBIAN_FRONTEND=noninteractive
 apt-get -y update
 apt-get install -y --reinstall ca-certificates
